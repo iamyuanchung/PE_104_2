@@ -1,0 +1,80 @@
+% !TEX program = XeLaTeX
+% !TEX encoding = UTF-8
+\documentclass[UTF8,nofonts]{ctexart}
+\usepackage{fullpage,nicefrac,amsmath}
+\usepackage{hyperref}
+\setCJKmainfont[BoldFont=STHeiti,ItalicFont=STKaiti]{STSong}
+\setCJKsansfont[BoldFont=STHeiti]{STXihei}
+\setCJKmonofont{STFangsong}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+
+\begin{document}
+\section*{Performance Evaluation HW1}
+  \noindent
+  姓名：鍾毓安         \\
+  系級：資訊四 	     \\
+  學號：B01902040     \\
+  繳交期限：2016.3.23
+  \begin{enumerate}
+    \item{
+      I think the statement is wrong.
+      If it is true, then exactly the same situation (expectation value equals to 1.25Y) will happen after we decide to swap to another door, this means that the action of swapping could last forever.
+      A much more reasonable explanation is as follows.
+      Assume we choose door A, then the expectation value of A is $\frac{1}{2} \cdot x + \frac{1}{2} \cdot 2x = 1.5x$.
+      The expectation value of B, which is another door that may contains twice or half of money of A, is still $\frac{1}{2} \cdot x + \frac{1}{2} \cdot 2x = 1.5x$, which is equals to that of A.
+      Therefore, it doesn't matter whether we swap the door or not.
+      Reference: \url{https://en.wikipedia.org/wiki/Two_envelopes_problem}
+    }
+    \item{
+      Assume box A is the box that contains two red balls, box B is the box that contains two blue balls, and box C is the box that contains a red ball and a blue ball.
+      \begin{enumerate}
+        \item{
+          P(\text{The second ball is also blue. | The first ball is blue.}) 
+          \begin{eqnarray*}
+            &=& \frac{P(\text{Both the first and second balls are blue.})}{P(\text{The first ball is blue.})} \\
+            &=& \frac{\frac{1}{3}}{\frac{1}{3} + \frac{1}{3}\cdot \frac{1}{2}} = \frac{2}{3}
+          \end{eqnarray*}
+        }
+        \item{
+          P({\text{The second ball is also blue. | There is one blue ball in the chosen box.}})
+          \begin{eqnarray*}
+            &=& \frac{P(\text{Both balls are blue.})}{P(\text{There is one blue ball in the chosen box.})} \\
+            &=& \frac{\frac{1}{3}}{\frac{2}{3}} = \frac{1}{2}
+          \end{eqnarray*}
+        }
+      \end{enumerate}
+    }
+    \item{
+      $X_{i}$ are i.i.d. exponentially distributed $\Rightarrow f_{X_{i}}(x) = \lambda e^{-\lambda x}, \lambda \geq 0$.
+      \begin{eqnarray*}
+        F_{X_{i}}^{*}(s) &=& \int_{0}^{\infty}\lambda e^{-\lambda x}e^{-sx}dx \\
+        &=& \int{0}^{\infty}\lambda e^{-(s + \lambda) x}dx \\
+        &=& \frac{\lambda}{s + \lambda}[-e^{-(s + \lambda)x}]_{0}^{\infty} \\
+        &=& \frac{\lambda}{s + \lambda}
+      \end{eqnarray*}
+      $\tilde{N}$ is geometrically distributed $\Rightarrow P_{\tilde{N}(n = i)} = p(1 - p)^{i - 1}$.
+      \begin{eqnarray*}
+        \tilde{N}(z) &=& \sum_{i=1}^{\infty}p(1 - p)^{i - 1}z^{i} \\
+        &=& \frac{zp}{1 - (1 - p)z}
+      \end{eqnarray*}
+      \begin{eqnarray*}
+        Y^{*}(s) &=& \tilde{N}(F_{X_{i}}^{*}(s)) \\
+        &=& p \cdot \frac{F_{X_{i}}^{*}(s)}{1 - (1 - p)F_{X_{i}}^{*}(s)} \\
+        &=& \frac{p \cdot \frac{\lambda}{s + \lambda}}{1 - (1 - p)\frac{\lambda}{s + \lambda}} \\
+        &=& \frac{\lambda p}{s + \lambda p}
+      \end{eqnarray*}
+      \begin{enumerate}
+        \item{
+          $E(Y) = [-\frac{dY^{*}(s)}{ds}]_{s=0} = [-\frac{-\lambda p}{(s + \lambda p)^2}]_{s=0} = \frac{1}{\lambda p}$
+        }
+        \item{
+          $Var(Y) = [\frac{d^{(2)}Y^{*}(s)}{ds^2}]_{s=0} = [\frac{2\lambda p}{(s + \lambda p)^3}]_{s=0} = \frac{2}{(\lambda p)^2}$
+        }
+      \end{enumerate}
+    }
+  \end{enumerate}
+\end{document}

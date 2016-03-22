@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{fullpage,nicefrac}
+\usepackage{fullpage,nicefrac,amsmath}
 % \usepackage{mathpazo}
 % \usepackage{amsfonts}
 
@@ -42,5 +42,25 @@
             a_{n} &=& 2^{n} + 3^{n} - 5n - 5
           \end{eqnarray*}
       \end{enumerate}
+    \item Poisson process Def. B to A:
+      \begin{eqnarray*}
+        P_{0}(t + h) &=& P(N(t + h) = 0) \\
+                     &=& P(N(t) = 0, N(t + h) - N(t) = 0) \\
+                     &=& P_{0}(t)(1 - \lambda h + o(h))
+      \end{eqnarray*}
+      For $h > 0$, $\frac{P_{0}(t + h) - P_{0}(t)}{h} = -\lambda P_{0}(t) + \frac{o(h)}{h}$. \\
+      Let $h \rightarrow 0, \frac{dP_{0}(t)}{dt} = -\lambda P_{0}(t) \Rightarrow P_{0}(t) = -e^{-\lambda t}$. \\
+      Let $n \geq 1$ be an arbitrary integer and assume $P[N(t + s) - N(s) = m] = e^{-\lambda t}\frac{(\lambda t)^{m}}{m!}$ is true for $1, 2, ..., n - 1$. \\
+      \begin{eqnarray*}
+      \Rightarrow P_{n}(t + h) &=& \sum_{k=0}^{n}(\text{exactly } k \text{ events in } [0, t]\text{, exactly } n - k \text{ events in } (t, t + h]) \\
+      &=& \sum_{k=0}^{n}P_{k}(t)P_{n-k}(h) \\
+      &=& P_{n}(t)P_{0}(h) + P_{n-1}(t)P_{1}(h) + o(h) \\
+      &=& P_{n}(1 - \lambda h) + P_{n-1}(t)\cdot \lambda h + o(h)
+      \end{eqnarray*}
+      For $h > 0$, \\
+      $\frac{P_{n}(t + h) - P_{n}(t)}{h} = -\lambda P_{n}(t) + \lambda P_{n-1}(t) + \frac{o(h)}{h}$. \\
+      Taking $h \rightarrow 0$, we get \\
+      $\frac{dP_{n}(t)}{dt} = \lambda P_{n}(t) + \lambda P_{n-1}(t)$, \\
+      $\Rightarrow P_{n}(t) = e^{-\lambda t}\frac{(\lambda t)^n}{n!}$
   \end{enumerate}
 \end{document}

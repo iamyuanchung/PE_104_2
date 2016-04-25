@@ -8,6 +8,7 @@
 
 """
 import sys
+
 import numpy as np
 
 
@@ -38,109 +39,24 @@ def main():
       >> python ./des.py input.txt
 
     """
+    # read in the input file
     with open(sys.argv[1], 'rb') as f:
         data = f.read().split(' ')
         arrival_time_mean = float(data[0])
         service_time_mean = float(data[1])
         simulation_time = int(data[2])
 
-    queue_list = []
-    current_time = 0
-    while current_time < simulation_time:
-        current_time += generate_exponential_time(arrival_time_mean)
-        queue_list.append(
-            Customer(
-                arrival_time=current_time,
-                service_time=generate_exponential_time(service_time_mean)
-            )
-        )
+    # run the simulation
+    
 
-    current_time = queue_list[0].arrival_time
-    finish_list = []
-    while current_time < simulation_time:
-
-        if len(s1.serving) == 0 or len(s2.serving) == 0:
-            # if at least one of the two servers is not busy ...
-            c = queue_list.pop(0)
-            c.start_service_time = current_time
-            if len(s1.serving) == 0 and len(s2.serving) > 0:
-                # assign the customer to the first server
-                c.served_by = 1
-                c.end_service_time = current_time + self.service_time
-                s1.serving.append(c)
-                if c.end_service_time < queue_list[0].arrival_time:
-                    finish_list.append(s1.pop(0))
-                    current_time = c.end_service_time
-                else:
-                    current_time = queue_list[0].arrival_time
-            elif len(s1.serving) > 0 and len(s2.serving) == 0:
-                # assign the customer to the second server
-                c.served_by = 2
-                c.end_service_time = current_time + self.service_time
-                s2.serving.append(c)
-                if c.end_service_time < queue_list[0].arrival_time:
-                    finish_list.append(s2.pop(0))
-                    current_time = c.end_service_time
-                else:
-                    current_time = queue_list[0].arrival_time
-            else:
-                # randomly assign the customer to one of the server
-                if np.random.random() <= 0.5:
-                    c.served_by = 1
-                    c.end_service_time = current_time + self.service_time
-                    s1.serving.append(c)
-                    if c.end_service_time < queue_list[0].arrival_time:
-                        finish_list.append(s1.pop(0))
-                        current_time = c.end_service_time
-                    else:
-                        current_time = queue_list[0].arrival_time
-                else:
-                    c.served_by = 2
-                    c.end_service_time = current_time + self.service_time
-                    s2.serving.append(c)
-                    if c.end_service_time < queue_list[0].arrival_time:
-                        finish_list.append(s2.pop(0))
-                        current_time = c.end_service_time
-                    else:
-                        current_time = queue_list[0].arrival_time
-
-    """
-    s1 = Staff()
-    s2 = Staff()
-    queue_list = []
-    finish_list = []
-    current_time = 0
-
-    while current_time < simulation_time:
-        queue_list.append(Customer(current_time + generate_exponential_time(arrival_time_mean)))
-
-        if len(s1.serving) == 0 or len(s2.serving) == 0:
-            # if at least one of the two servers is not busy ...
-            c = queue_list.pop(0)
-            c.start_service_time = current_time
-            if len(s1.serving) == 0 and len(s2.serving) > 0:
-                # assign the customer to the first server
-                c.served_by = 1
-                s1.serving.append(c)
-                c.end_service_time = current_time + generate_exponential_time(service_time_mean)
-                if c.end_service_time < queue_list[0].arrival_time:
-                    finish_list.append(s1.pop(0))
-                    current_time = c.end_service_time
-                else:
-                    current_time = queue_list[0].arrival_time
-            elif len(s1.serving) > 0 and len(s2.serving) == 0:
-                # assign the customer to the second server
-                c.served_by = 2
-                s2.serving.append(c)
-            else:
-                # randomly assign the customer to one of the server
-                if np.random.random() <= 0.5:
-                    c.served_by = 1
-                    s1.serving.append(c)
-                else:
-                    c.served_by = 2
-                    s2.serving.append(c)
-    """
+    # output the final statistics
+    total_waiting_time = 0.
+    total_system_time = 0.
+    for c in customer_list:
+        total_waiting_time += (c.start_service_time - c.arrival_time)
+        total_system_time += (c.end_service_time - c.arrival_time)
+    print 'Average waiting time: %f' % total_waiting_time / len(customer_list)
+    print 'Average system time: %f' % total_system_time / len(customer_list)
 
 
 if __name__ == '__main__':

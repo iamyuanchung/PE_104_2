@@ -1,3 +1,3 @@
 # README #
 
-This repository contains my homework & project of Performance Evaluation done at NTU during semester 104-2.
+Performance Evaluation @ NTU, Spring 2016
